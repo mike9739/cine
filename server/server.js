@@ -13,7 +13,7 @@ app.use(require('./routes/index'))
 
 
 
-mongoose.connect('mongodb://localhost:27017/cinemex', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect('mongodb://localhost:27017/cine', { useNewUrlParser: true }, (err, res) => {
     if (err) throw new Error
     console.log('Base de datos funcionando')
 })

@@ -1,16 +1,11 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
-const Schema = mongoose.Schema()
+
+let Schema = mongoose.Schema
 let valid_classification = {
     values:['A','AA','B','C','D','R'],
     message:'no es {VALUE} clasificación valida'
 }
-
-let valid_languages ={
-    values:['Esṕañol','Ingles','Frances','Alemán','Japones','Ruso'],
-    message:'no es {VALUE} un idioma válido'    
-}
-
 
 let movieSchema = new Schema({
     movie_name:{
@@ -32,7 +27,6 @@ let movieSchema = new Schema({
     },
     languages:{
         type:'String',
-        enum:valid_languages,
         required:[true,'el idioma es obligatorio ']
     },
     synopsis:{
@@ -40,5 +34,5 @@ let movieSchema = new Schema({
     }
 })
 
-userSchema.plugin(uniqueValidator,{message : '{PATH}'})
+movieSchema.plugin(uniqueValidator,{message : '{PATH}'})
 module.exports = mongoose.model('Movies',movieSchema)
