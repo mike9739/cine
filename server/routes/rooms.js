@@ -1,51 +1,47 @@
 const express = require('express')
-const Movie = require('../models/movies');
+const Room = require('../models/rooms')
 
 const app = express()
-app.get('/movies', (req, res) => {
+
+app.get('/rooms', (req, res) => {
     let desde = req.query.desde || 0
     desde = Number(desde)
     let limite = req.query.limite || 5
     limite = Number(5)
 
-    Movie.find({}).skip(desde).limit(limite).exec((err, movies) => {
+    Room.find({}).skip(desde).limit(limite).exec((err, rooms) => {
         if (err) {
             return res.status(400).json({
                 status: 'Fail',
                 err
             })
         }
-        Movie.countDocuments({}, (err, connteo) => {
+        Room.countDocuments({}, (err, connteo) => {
             res.json({
                 ok: true,
-                movies,
+                rooms,
                 connteo
             })
         })
     })
 })
 
-app.post('/movies', (req, res) => {
+app.post('/rooms', (req, res) => {
     let body = req.body
-    let movie = new Movie({
-        movie_name: body.name,
-        duration: body.duration,
-        year: body.year,
-        classification: body.classification,
-        languages: body.languages,
-        synopsis: body.synopsis
+    let room = new Room({
+        number_seats: body.number_seats,
+        room_number: body.room_number
     })
-    movie.save((err, moviedb) => {
+    room.save((err, roomdb) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             })
-
         }
         return res.json({
             ok: true,
-            movie: moviedb
+            room: roomdb
         })
     })
 })

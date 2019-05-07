@@ -32,7 +32,7 @@ app.get('/usuarios', verificarToken, (req, res) => {
     })
 
 })
-app.post('/usuarios', verificarToken, (req, res) => {
+app.post('/usuarios', (req, res) => {
     let body = req.body
     let usuario = new User({
         name: body.name,
